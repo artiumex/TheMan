@@ -1,0 +1,20 @@
+{
+  "dollar": ":dollar:",
+
+  "wheat": "<:wheat:845902635096997930>",
+  "carrot": "<:carrot:845902635269750784>",
+  "potato": "<:potato:845902635202641951>",
+  "fertilizer": "<:fertilizer:845905671231766539>",
+
+  "bought": ":white_check_mark:",
+  "notbought": ":x:",
+
+  "license": ":card_index:",
+  "beer": ":beer:",
+  "bow": ":archery:",
+  "bowammo": "<:arrow:846132523096342528>",
+  "gun": ":gun:",
+  "gunammo": "<:bullet:846131746559098911>",
+  "rifle": "<:rifle:846131747232940142>",
+  "rifleammo": "<:bullet:846131746559098911>"
+}
