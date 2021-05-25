@@ -1,6 +1,6 @@
 const User = require('../../database/models/userSchema');
 const emoji = require('../../emoji.json');
-const { reply } = require("../../lib");
+const { reply, chatVars } = require("../../lib");
 
 var prices = {
   "wheat": {
@@ -37,14 +37,8 @@ module.exports = {
 
     var number = args[0];
     var amount = args[1];
-    if(!amount) return reply(message,`Please provide an amount!`);
-    amount
-    .replace(/allmoney/gi, userProfile.balance.toString())
-    .replace(/allwheat/gi, userProfile.wheat.toString())
-    .replace(/allcarrot/gi, userProfile.carrots.toString())
-    .replace(/allpotato/gi, userProfile.potatoes.toString())
-    .replace(/[^-()\d/*+.]/g, '');
-    amount = Math.floor(eval(amount));
+    if(!args[1]) return reply(message,`Please provide an amount!`);
+    amount = chatVars(amount,userProfile);
 
     if (["1","3","5"].includes(number)){
       if(number == "1"){
@@ -52,7 +46,7 @@ module.exports = {
         if (cost > userProfile.balance) return reply(message,"You don't have enough money to buy that!");
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { balance: userProfile.balance - cost, wheatPlanted: userProfile.wheatPlanted + amount })
-          .then(reply(message,`you now have \$${userProfile.balance - cost}!`));
+          .then(reply(message,`You now have \$${userProfile.balance - cost}!`));
         } catch (err) {
           console.log(err);
         }
@@ -62,7 +56,7 @@ module.exports = {
         if (cost > userProfile.balance) return reply(message,"You don't have enough money to buy that!");
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { balance: userProfile.balance - cost, carrotsPlanted: userProfile.carrotsPlanted + amount })
-          .then(reply(message,`you now have \$${userProfile.balance - cost}!`));
+          .then(reply(message,`You now have \$${userProfile.balance - cost}!`));
         } catch (err) {
           console.log(err);
         }
@@ -72,7 +66,7 @@ module.exports = {
         if (cost > userProfile.balance) return reply(message,"You don't have enough money to buy that!");
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { balance: userProfile.balance - cost, potatoesPlanted: userProfile.potatoesPlanted + amount })
-          .then(reply(message,`you now have \$${userProfile.balance - cost}!`));
+          .then(reply(message,`You now have \$${userProfile.balance - cost}!`));
         } catch (err) {
           console.log(err);
         }
@@ -84,7 +78,7 @@ module.exports = {
         balAdd = prices.wheat.sell * amount;
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { balance: userProfile.balance + balAdd, wheat: userProfile.wheat - amount })
-          .then(reply(message,`you now have \$${userProfile.balance + balAdd}!`));
+          .then(reply(message,`You now have \$${userProfile.balance + balAdd}!`));
         } catch (err) {
           console.log(err);
         }
@@ -94,7 +88,7 @@ module.exports = {
         balAdd = prices.carrot.sell * amount;
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { balance: userProfile.balance + balAdd, carrots: userProfile.carrots - amount })
-          .then(reply(message,`you now have \$${userProfile.balance + balAdd}!`));
+          .then(reply(message,`You now have \$${userProfile.balance + balAdd}!`));
         } catch (err) {
           console.log(err);
         }
@@ -104,7 +98,7 @@ module.exports = {
         balAdd = prices.potato.sell * amount;
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { balance: userProfile.balance + balAdd, potatoes: userProfile.potatoes - amount })
-          .then(reply(message,`you now have \$${userProfile.balance + balAdd}!`));
+          .then(reply(message,`You now have \$${userProfile.balance + balAdd}!`));
         } catch (err) {
           console.log(err);
         }
@@ -114,7 +108,7 @@ module.exports = {
       if (cost > userProfile.balance) return reply(message,"You don't have enough money to buy that!");
       try {
         await User.findOneAndUpdate({ userID: message.author.id }, { balance: userProfile.balance - cost, fertilizer: userProfile.fertilizer + amount })
-        .then(reply(message,`you now have \$${userProfile.balance - cost}!`));
+        .then(reply(message,`You now have \$${userProfile.balance - cost}!`));
       } catch (err) {
         console.log(err);
       }

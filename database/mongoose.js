@@ -12,7 +12,7 @@ module.exports = {
       family: 4
     };
 
-    mongoose.connect(`mongodb+srv://discordbot:${pass}@bot.9tzoh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, dbOptions);
+    mongoose.connect(`mongodb+srv://discordbot:${pass}@bot.9tzoh.mongodb.net/testdb?retryWrites=true&w=majority`, dbOptions);
     mongoose.set('useFindAndModify', false);
     mongoose.Promise = global.Promise;
 

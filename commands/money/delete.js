@@ -3,8 +3,7 @@ const User = require('../../database/models/userSchema');
 module.exports = {
 	name: 'delete',
 	description: 'Removes your character.',
-  category: "Habits",
-  hCmd: true,
+  category: "Money",
   args: true,
   ownerOnly: true,
   usage: "[name]",

@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 module.exports = {
 	name: 'create',
 	description: 'Registers your character.',
-  category: "Habits",
-  hCmd: true,
+  category: "Money",
   args: true,
   usage: "[name]",
 	async execute(message, args, client) {

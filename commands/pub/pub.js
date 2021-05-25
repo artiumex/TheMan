@@ -1,6 +1,6 @@
 const User = require('../../database/models/userSchema');
 const emoji = require('../../emoji.json');
-const { reply } = require("../../lib");
+const { reply, chatVars } = require("../../lib");
 
 const prices = {
   "license": 1000,
@@ -39,13 +39,9 @@ module.exports = {
     }
 
     var number = args[0];
-    var amount = args[1]
-    .replace(/allmoney/gi, userProfile.balance.toString())
-    .replace(/allwheat/gi, userProfile.wheat.toString())
-    .replace(/allcarrot/gi, userProfile.carrot.toString())
-    .replace(/allpotato/gi, userProfile.potato.toString())
-    .replace(/[^-()\d/*+.]/g, '');
-    amount = eval(amount);
+    var amount = args[1];
+    if(!args[1]) return reply(message,`Please provide an amount!`);
+    amount = chatVars(amount,userProfile);
     
     if(!amount) return reply(message,`Provide an amount!`);
     if(["1","2","3","4","5","6","7","8"].includes(number)){

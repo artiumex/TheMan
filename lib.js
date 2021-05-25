@@ -17,4 +17,21 @@ function reply(message,text){
   message.channel.send(output);
 }
 
-module.exports = { reply, color, randColor };
+function chatVars(t,profile){
+  var output = t
+  .replace(/allmoney/gi, profile.balance.toString())
+  .replace(/allwheat/gi, profile.wheat.toString())
+  .replace(/allcarrot/gi, profile.carrots.toString())
+  .replace(/allpotato/gi, profile.potatoes.toString())
+  .replace(/[^-()\d/*+.]/g, '');
+  
+  try{
+    output = Math.floor(eval(output));
+  } catch (err){
+    console.log(err);
+  }
+  
+  return output
+}
+
+module.exports = { reply, color, randColor, chatVars };

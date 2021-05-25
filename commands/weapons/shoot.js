@@ -9,8 +9,7 @@ module.exports = {
   usage: "@person",
 	async execute(message, args, client) {
     let mentionedMember = message.mentions.members.first()
-    if(args.length > 0) mentionedMember = await message.guild.members.fetch(args[0]);
-    else if (!mentionedMember) return message.reply('please @ someone to give money to!');
+    if (!mentionedMember) return message.reply('please @ someone to give money to!');
 
     let userProfile = await User.findOne({ userID: message.author.id });
     let mentionedProfile = await User.findOne({ userID: mentionedMember.id });
