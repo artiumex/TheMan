@@ -26,7 +26,7 @@ function chatVars(t,profile){
   .replace(/[^-()\d/*+.]/g, '');
   
   try{
-    output = Math.floor(eval(output));
+    output = Math.abs(Math.floor(eval(output)));
   } catch (err){
     console.log(err);
   }

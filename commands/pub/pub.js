@@ -23,7 +23,7 @@ module.exports = {
 
     if(!args.length){    
       var text = "";
-      if (!userProfile.barLicense) text += `You dont have a bar license! Buy one for ${emoji.dollar} ${prices.license} with \`${client.prefix}pub 1 1\`\n\n`;
+      if (!userProfile.barLicense) text += `You dont have a bar license! Buy one for ${emoji.dollar} ${prices.license} with \`${client.prefix}pub 1\`\n\n`;
       text += `\`${client.prefix}pub <id> <amount>\` to buy things from the pub\n**Pub**\n`;
       text += `[1] ${isBought(userProfile.barLicense)} ${emoji.license} Bar Membership | Price: ${emoji.dollar} ${prices.license}\n`;
       text += `[2] ${emoji.beer} Beer | Price: ${emoji.dollar} ${prices.beer}\n`;
@@ -40,8 +40,8 @@ module.exports = {
 
     var number = args[0];
     var amount = args[1];
-    if(!args[1]) return reply(message,`Please provide an amount!`);
-    amount = chatVars(amount,userProfile);
+    if(!amount) amount = 1;
+    else amount = chatVars(amount,userProfile);
     
     if(!amount) return reply(message,`Provide an amount!`);
     if(["1","2","3","4","5","6","7","8"].includes(number)){
@@ -59,7 +59,7 @@ module.exports = {
 
       if(number == "2"){
         var cost = prices.beer * amount;
-        if(cost > userProfile.balance) return reply(message,"You don't have enough money to buy beer!");
+        if(cost > userProfile.balance) return reply(message,`You don't have enough money to buy ${emoji.beer} Beer!`);
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { balance: userProfile.balance - cost, beer: userProfile.beer + amount })
           .then(reply(message,`Bought ${emoji.beer} ${amount}!`));
@@ -68,8 +68,8 @@ module.exports = {
         }
       }
       if(number == "3"){
-        if(userProfile.bow) return reply(message,"You already have a bow!");
-        if(prices.bow > userProfile.beer) return reply(message,"You don't have enough beer to buy a bow!");
+        if(userProfile.bow) return reply(message,`You already have a ${emojji.bow} Bow!`);
+        if(prices.bow > userProfile.beer) return reply(message,`You don't have enough ${emoji.beer} Beer to buy a ${emojji.bow} Bow!`);
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { beer: userProfile.beer - prices.bow, bow: true })
           .then(reply(message,`Bought ${emoji.bow} 1!`));
@@ -79,7 +79,7 @@ module.exports = {
       }
       if(number == "4"){
         var cost = prices.bowammo * amount;
-        if(cost > userProfile.beer) return reply(message,"You don't have enough beer to buy a bow!");
+        if(cost > userProfile.beer) return reply(message,`You don't have enough ${emoji.beer} Beer to buy ${emoji.bowammo} Arrows!`);
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { beer: userProfile.beer - cost, bowAmmo: userProfile.bowAmmo + amount })
           .then(reply(message,`Bought ${emoji.bowammo} ${amount}!`));
@@ -88,8 +88,8 @@ module.exports = {
         }
       }
       if(number == "5"){
-        if(userProfile.gun) return reply(message,"You already have a gun!");
-        if(prices.gun > userProfile.beer) return reply(message,"You don't have enough beer to buy a gun!");
+        if(userProfile.gun) return reply(message,`You already have a ${emojji.gun} Shotgun!`);
+        if(prices.gun > userProfile.beer) return reply(message,`You don't have enough ${emoji.beer} Beer to buy a ${emojji.gun} Shotgun!`);
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { beer: userProfile.beer - prices.gun, gun: true })
           .then(reply(message,`Bought ${emoji.gun} 1!`));
@@ -99,7 +99,7 @@ module.exports = {
       }
       if(number == "6"){
         var cost = prices.gunammo * amount;
-        if(cost > userProfile.beer) return reply(message,"You don't have enough beer to buy a shotgun!");
+        if(cost > userProfile.beer) return reply(message,`You don't have enough ${emoji.beer} Beer to buy ${emoji.gunammo} Bullets!`);
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { beer: userProfile.beer - cost, gunAmmo: userProfile.gunAmmo + amount })
           .then(reply(message,`Bought ${emoji.gunammo} ${amount}!`));
@@ -108,8 +108,8 @@ module.exports = {
         }
       }
       if(number == "7"){
-        if(userProfile.rifle) return reply(message,"You already have a rifle!");
-        if(prices.rifle > userProfile.beer) return reply(message,"You don't have enough beer to buy a rifle!");
+        if(userProfile.rifle) return reply(message,`You already have a ${emojji.rifle} Rifle!`);
+        if(prices.rifle > userProfile.beer) return reply(message,`You don't have enough ${emoji.beer} Beer to buy a ${emojji.rifle} Rifle!`);
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { beer: userProfile.beer - prices.rifle, rifle: true })
           .then(reply(message,`Bought ${emoji.rifle} 1!`));
@@ -119,7 +119,7 @@ module.exports = {
       }
       if(number == "8"){
         var cost = prices.rifleammo * amount;
-        if(cost > userProfile.beer) return reply(message,"You don't have enough beer to buy a rifle!");
+        if(cost > userProfile.beer) return reply(message,`You don't have enough ${emoji.beer} Beer to buy ${emoji.rifleammo} Bullets!`);
         try {
           await User.findOneAndUpdate({ userID: message.author.id }, { beer: userProfile.beer - cost, rifleAmmo: userProfile.rifleAmmo + amount })
           .then(reply(message,`Bought ${emoji.rifleammo} ${amount}!`));

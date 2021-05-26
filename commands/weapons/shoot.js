@@ -1,6 +1,9 @@
 const User = require('../../database/models/userSchema');
 const emoji = require('../../emoji.json');
 
+//gun steals beer as well?
+//rifle steals crops?
+
 module.exports = {
 	name: 'shoot',
 	description: 'Shoots the mentioned person and loots them',

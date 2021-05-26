@@ -37,8 +37,8 @@ module.exports = {
 
     var number = args[0];
     var amount = args[1];
-    if(!args[1]) return reply(message,`Please provide an amount!`);
-    amount = chatVars(amount,userProfile);
+    if(!amount) amount = 1;
+    else amount = chatVars(amount,userProfile);
 
     if (["1","3","5"].includes(number)){
       if(number == "1"){
