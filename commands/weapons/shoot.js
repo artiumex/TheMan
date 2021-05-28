@@ -1,5 +1,6 @@
 const User = require('../../database/models/userSchema');
 const emoji = require('../../emoji.json');
+const { reply } = require("../../lib");
 
 //gun steals beer as well?
 //rifle steals crops?
@@ -12,28 +13,28 @@ module.exports = {
   usage: "@person",
 	async execute(message, args, client) {
     let mentionedMember = message.mentions.members.first()
-    if (!mentionedMember) return message.reply('please @ someone to give money to!');
+    if (!mentionedMember) return reply(message,'Please @ someone to shoot!');
 
     let userProfile = await User.findOne({ userID: message.author.id });
     let mentionedProfile = await User.findOne({ userID: mentionedMember.id });
-    if(!(userProfile || mentionedProfile)) return message.reply(`Profile(s) does not exist!`);
+    if(!(userProfile || mentionedProfile)) return reply(message,`Profile(s) does not exist!`);
 
     var amount, weapon, update;
     const now = Date.now();
     if(userProfile.currentWeapon == 0) {
-      if ((new Date(userProfile.bowCooldown).getTime() + (2 * 60 * 60 * 1000)) > now) return message.reply(`That weapon has a 2 hour cooldown! Try again in ${compDates(now, userProfile.bowCooldown, 2)}`);
+      if ((new Date(userProfile.bowCooldown).getTime() + (2 * 60 * 60 * 1000)) > now) return reply(message,`That weapon has a 2 hour cooldown! Try again in ${compDates(now, userProfile.bowCooldown, 2)}`);
       amount = Math.floor((Math.random() * mentionedProfile.balance) / 6);
       weapon = `${emoji.bow} Bow`;
       update = { balance: userProfile.balance + amount, bowAmmo: userProfile.bowAmmo - 1, bowCooldown: new Date() };
     }
     if(userProfile.currentWeapon == 1) {
-      if ((new Date(userProfile.gunCooldown).getTime() + (6 * 60 * 60 * 1000)) > now) return message.reply(`That weapon has a 6 hour cooldown! Try again in ${compDates(now, userProfile.gunCooldown, 6)}`);
+      if ((new Date(userProfile.gunCooldown).getTime() + (6 * 60 * 60 * 1000)) > now) return reply(message,`That weapon has a 6 hour cooldown! Try again in ${compDates(now, userProfile.gunCooldown, 6)}`);
       amount = Math.floor((Math.random() * mentionedProfile.balance) / 4);
       weapon = `${emoji.gun} Shotgun`;
       update = { balance: userProfile.balance + amount, gunAmmo: userProfile.gunAmmo - 1, gunCooldown: new Date() };
     }
     if(userProfile.currentWeapon == 2) {
-      if ((new Date(userProfile.rifleCooldown).getTime() + (12 * 60 * 60 * 1000)) > now) return message.reply(`That weapon has a 12 hour cooldown! Try again in ${compDates(now, userProfile.rifleCooldown, 12)}`);
+      if ((new Date(userProfile.rifleCooldown).getTime() + (12 * 60 * 60 * 1000)) > now) return reply(message,`That weapon has a 12 hour cooldown! Try again in ${compDates(now, userProfile.rifleCooldown, 12)}`);
       amount = Math.floor((Math.random() * mentionedProfile.balance) / 3);
       weapon = `${emoji.rifle} Rifle`;
       update = { balance: userProfile.balance + amount, rifleAmmo: userProfile.rifleAmmo - 1, rifleCooldown: new Date() };
